@@ -1,0 +1,73 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.gray {
+    color: #e6e6e6;;
+    line-height: 20px;
+}
+
+#heading {
+    font-family: 'Cabin', sans-serif;
+    font-size: 100px;
+}
+
+hr {
+    border: 1px solid #c907ff;
+}
+
+.link {
+    background-color: #430c5b;
+    color: white;
+    text-decoration: none;
+    padding: 10px 40px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.first {
+    background-color: whitesmoke;
+    color: #430c5b;
+    margin-right: 13px;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+nav {
+    background-color: #9802d9;;
+    color: white;
+    padding: 20px;
+    font-weight: bold;
+    font-family: 'Hachi Maru Pop', cursive;
+}
+
+.purple {
+    background-color: #9802d9;;
+    text-align: center;
+    color: white;
+    height: 90vh;
+}
+
+.login {
+    height: 90vh;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loginform {
+    display: flex;
+    flex-direction: column;
+}
