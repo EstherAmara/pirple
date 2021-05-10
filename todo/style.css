@@ -37,8 +37,17 @@ hr {
     margin-right: 13px;
 }
 
+.m-2 {
+    margin: 2rem;
+}
 .mt-2 {
     margin-top: 2rem;
+}
+.w-half {
+    width: 50%;
+}
+.w-full {
+    width: 100%;
 }
 
 nav {
@@ -67,7 +76,128 @@ nav {
     flex-direction: column;
 }
 
+.justify-between {
+    display: flex;
+    justify-content: space-between;
+}
+
 .loginform {
     display: flex;
     flex-direction: column;
+    width: 400px;
+}
+.logininput {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #430c5b;
+    font-size: 18px;
+    color: #430c5b;
+}
+.logininput::placeholder {
+    color: #430c5b;
+    font-size: 18px;
+}
+.logininput:focus {
+    outline: none;
+    border: 1px solid #9802d9;
+    box-shadow: 1px 0px 3px #c907ff;
+}
+
+.btn {
+    width: 45%;
+    text-align: center;
+    align-self: center;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    background: #9802D9;
+    border: 1px solid #430c5b;
+    border-radius: 10px;
+}
+
+.heading {
+    font-size: 25px;
+    padding-bottom: 30px;
+    color: #430c5b;
+    text-shadow: 1px 0px 0px #c907ff;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+
+.list {
+    background: #f0f0f0;
+    box-shadow: 1px 1px 20px lightgray;
+    border-radius: 10px;
+    padding: 20px;
+}
+.list-hr {
+    width: 35%;
+    border: 2px solid #c907ff;
+    border-radius: 30px;
+    margin-bottom: 30px;
+}
+.list-btn {
+    padding: 8px 25px;
+    background-color: #9802d9;
+    border: 1px solid #c907ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.list-date {
+    font-size: 12px;
+    color: gray;
+}
+.list-gray {
+    font-size: 25px;
+    color: #4f4e4e;
+}
+
+.newlist input[type='text'] {
+    border: none;
+    border-bottom: 2px solid #c907ff;
+    color: purple;
+    font-size: 25px;
+    width: 60%;
+}
+.newlist input[type='text']:focus {
+    outline: none;
+}
+.newlist input[type='text']::placeholder {
+    color: #9802D9;
+    font-size: 25px;
+}
+
+.subtask {
+    border: none;
+    border-bottom: 2px solid #c907ff;
+    color: purple;
+    font-size: 18px;
+    width: 25%;
+}
+.subtask:focus {
+    outline: none;
+}
+.subtask::placeholder {
+    color: #9802D9;
+    font-size: 18px;
+}
+
+.subbtn {
+    padding: 7px 35px;
+    border-radius: 5px;
+    border: none;
+    background: #9802D9;
+    color: white;
+    font-weight: bold;
+}
+
+.sect {
+    display: none;
 }
