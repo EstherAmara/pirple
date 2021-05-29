@@ -22,7 +22,7 @@
         </nav>
         <hr />
         <div id="app">
-            <div class="purple center sect" id="home">
+            <div class="purple sect center" id="home">
                 <div>
                     <h1 id="heading">MyTodoList</h1>
                     <div class="gray">
@@ -39,24 +39,26 @@
             <div class="login center sect" id="loginSection">
                 <div class="form-container">
                     <p class="heading">Log in to view your todo lists</p>
-                    <form method="POST" class="loginform">
-                        <input type="email" id="email" placeholder="Your email" class="logininput" autocomplete="off">
-                        <input type="password" name="" id="password" placeholder="Your password" class="logininput">
-                        <button class="btn">Log in</button>
+                    <p id="errLogin" class="err"></p>
+                    <form method="POST" class="loginform" id="loginForm">
+                        <input type="email" id="email" placeholder="Your email" class="logininput" autocomplete="off" required>
+                        <input type="password" name="" id="password" placeholder="Your password" class="logininput" required>
+                        <button type="submit" class="btn" id="loginSubmit">Log in</button>
                     </form>
                 </div>
             </div>
         
-            <div class="login center sect" id="register">
+            <div class="register center sect" id="register">
                 <div class="form-container">
                     <p class="heading"> Register to start making todo lists </p>
-                    <form method="post" class="loginform" id="loginform">
-                        <input type="text" class="logininput" placeholder="Your first name" autocomplete="off" required>
-                        <input type="text" class="logininput" placeholder="Your last name" required>
-                        <input type="email" class="logininput" placeholder="Your email" autocomplete="off" required>
-                        <input type="password" class="logininput" placeholder="Your password" required>
+                    <p id="errRegister" class="err"></p>
+                    <form method="post" class="loginform" id="regForm">
+                        <input type="text" class="logininput" placeholder="Your first name" autocomplete="off" required id="first">
+                        <input type="text" class="logininput" placeholder="Your last name" required id="last">
+                        <input type="email" class="logininput" placeholder="Your email" autocomplete="off" required id="mail">
+                        <input type="password" class="logininput" placeholder="Your password" required id="pass">
                         <div style="display: flex;">
-                            <input type="checkbox" name="" id="" style="margin-right: 10px;" required> I agree to the Terms of Use
+                            <input type="checkbox" name="" id="checkbox" style="margin-right: 10px;" required> I agree to the Terms of Use
                         </div>
                         <button type="submit" class="btn mt-2" id="submit">Sign up</button>
                     </form>
@@ -65,7 +67,7 @@
         
             <div class="m-2 sect" id="dashboard">
                 <div class="justify-between">
-                    <p class="list-gray">Welcome back, <span> Esther </span></p>
+                    <p class="list-gray">Welcome back, <span id="name"> Esther </span></p>
                     <div>
                         <a href="#" class="list-btn" id="createTodo"> Create a new list </a>
                     </div>
@@ -79,8 +81,26 @@
                 </div>
             </div>
 
-            <div class="m-2 sect" id="create">
-                <form class="">
+            <div class="m-2" id="create">
+                <div style="margin-bottom:20px;">
+                    <input type="checkbox" id="done"> <label for="done"> Mark this task as complete </label>
+                </div>
+                <div class="mt-2" style="display: flex; justify-content: space-between;">
+                    <div style="width: 50%;">
+                        <form action="" class="newlist" id="tasklist"> 
+                            <input type="text" id="title" placeholder="Todo title">
+                            <input type="text" id="subtask" placeholder="Sub task" class="subtask">
+                            <div>
+                                <button class="subbtn" id="subbtn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div style="width: 50%;">
+                        <input id="check" type="checkbox"> <label for="check" id="checklabel"> Clean the house </label>
+                    </div>
+                </div>
+
+                <!-- <form class="">
                     <div class="justify-between newlist w-full">
                         <div class="w-half">
                             <input type="text" placeholder="Todo title">
@@ -96,20 +116,20 @@
                                 <input type="checkbox" name="1" id="2"> Clean the house
                             </div>
                             <div class="mt-2">
-                                <div>
-                                    <input type="text" placeholder="Sub task" class="subtask">
-                                    <p class="mt-2"> &plus; Add a task </p>
+                                <div class="justify-between">
+                                    <input type="text" placeholder="Sub task" class="subtask" id="subtask">
+                                    <button class="subbtn" id="subbtn">Submit</button>
                                 </div>
                                 <div class="mt-2">
-                                    <button class="subbtn">Submit</button>
+                                    <p> &plus; Add a task</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </form> -->
             </div>
         
-            <div class="login center" id="account">
+            <div class="login center sect" id="account">
                 <div class="form-container">
                     <p class="heading"> Edit Account </p>
                     <form method="post" class="loginform" id="loginform">

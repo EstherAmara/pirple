@@ -8,6 +8,12 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.err {
+    text-align: center;
+    color: red;
+    margin: 00px auto 20px;
+}
+
 .gray {
     color: #e6e6e6;;
     line-height: 20px;
@@ -65,7 +71,7 @@ nav {
     height: 90vh;
 }
 
-.login {
+.login,.register {
     height: 90vh;
 }
 
@@ -81,7 +87,7 @@ nav {
     justify-content: space-between;
 }
 
-.loginform {
+#regForm, #loginForm {
     display: flex;
     flex-direction: column;
     width: 400px;
@@ -163,16 +169,17 @@ nav {
     border: none;
     border-bottom: 2px solid #c907ff;
     color: purple;
-    font-size: 25px;
+    font-size: 18px;
     width: 60%;
+    margin-bottom: 30px;
 }
 .newlist input[type='text']:focus {
     outline: none;
 }
-.newlist input[type='text']::placeholder {
+/* .newlist input[type='text']::placeholder {
     color: #9802D9;
-    font-size: 25px;
-}
+    font-size: 14px;
+} */
 
 .subtask {
     border: none;
@@ -186,7 +193,7 @@ nav {
 }
 .subtask::placeholder {
     color: #9802D9;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .subbtn {
