@@ -182,11 +182,28 @@ function showDashboard() {
 }
 
 function showSingleTodo(e) {
-    let title = document.getElementsByClassName('task-title');
+    let title;
+    let singleTitle = document.getElementById('singleTitle');
+    let titleList = document.getElementById('titleList');
+
     if(e.target.className === 'list' || e.target.tagName === 'P' || e.target.tagName === 'HR') {
-        if(e.contains(title)) {
-            console.log('yes');
-        } else console.log('no');
+        if(e.target.tagName === 'HR') {
+            title = e.target.parentNode.textContent.trim();
+        } else title = e.target.textContent.trim();
+    }
+
+    let tasks = JSON.parse(localStorage.getItem('task'));
+    for(let key of tasks) {
+        if(key.title === title) {
+            singleTitle.innerText = key.title;
+            for(let taskey of key.tasks) {
+                let li = document.createElement('li');
+                li.innerText = taskey;
+                titleList.appendChild(li);
+                index++;
+            }
+            return;
+        }
     }
 }
 
