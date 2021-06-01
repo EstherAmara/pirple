@@ -72,12 +72,7 @@
                         <a href="#" class="list-btn" id="createTodo"> Create a new list </a>
                     </div>
                 </div>
-                <div class="grid mt-2">
-                    <div class="list">
-                        <hr class="list-hr" />
-                        <p> Code today </p>
-                        <p class="list-date"> Jan 2, 2020 </p>
-                    </div>
+                <div class="grid mt-2" id="dashboard-task">
                 </div>
             </div>
 
@@ -87,9 +82,10 @@
                 </div>
                 <div class="mt-2" style="display: flex; justify-content: space-between;">
                     <div style="width: 50%;">
-                        <form action="" class="newlist" id="tasklist"> 
+                        <form class="newlist" id="tasklist"> 
                             <input type="text" id="title" placeholder="Todo title">
                             <input type="text" id="subtask" placeholder="Sub task" class="subtask">
+                            <input type="text" placeholder="Sub task" class="subtask">
                             <div>
                                 <button class="subbtn" id="subbtn">Submit</button>
                             </div>

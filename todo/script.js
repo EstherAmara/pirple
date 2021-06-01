@@ -25,6 +25,8 @@ const regForm = document.getElementById('regForm');
 
 const tasklist = document.getElementById('tasklist');
 
+const dasboardGrid = document.getElementById('dashboard-task');
+
 createTodoButton.addEventListener('click', showCreateTodo);
 
 //registration and login
@@ -34,7 +36,9 @@ loginButton.addEventListener('click', showLogin);
 loginForm.addEventListener('submit', loginCheck);
 regForm.addEventListener('submit', registrationCheck);
 
-tasklist.addEventListener('click', addTask);
+tasklist.addEventListener('submit', addTask);
+
+dasboardGrid.addEventListener('click', showSingleTodo);
 
 //dashboard
 function showRegister() {
@@ -119,29 +123,74 @@ function showCreateTodo() {
 }
 
 function addTask(e) {
+    e.preventDefault();
     const title = document.getElementById('title');
     const subtaskList = document.getElementsByClassName('subtask'); 
     const user = JSON.parse(localStorage.getItem('user'));
-    const userEmail = user['email'];
+    const userEmail = user['mail'];
     const subtask = [];
+    const allTasks = [];
 
-    for(key in subtaskList) {
-        subtask.push(subtaskList[key]);
+    for(let key of subtaskList) {
+        subtask.push(key.value);
     }
 
-    console.log(subtask);;
-
     const task = {
-        user: userEmail['email'],
+        user: userEmail,
         title: title.value,
         tasks: subtask
     };
 
-    localStorage.setItem('task', JSON.stringify(task));
+    allTasks.push(task);
+
+    let tasks = JSON.parse(localStorage.getItem('task'));
+
+    if(tasks) {
+        for(let key of tasks) {
+            console.log('key is ', key);
+            if(key.title === task.title) {
+                alert('this task already exists');
+                return;
+            }
+            allTasks.push(key)
+        }
+    };
+    console.log(allTasks);
+    // localStorage.removeItem('task');
+    localStorage.setItem('task', JSON.stringify(allTasks));
+    tasklist.reset();
     alert('successful');
+    location.reload();
+}
+
+function showDashboard() {
+    dashboard.classList.remove('sect');
+    let tasks = JSON.parse(localStorage.getItem('task'));
+
+    console.log('dashboard tasks ', tasks);
+    if(tasks) {
+        for(key of tasks) {
+            let list = document.createElement('div');
+            list.classList.add('list');
+            list.innerHTML = `
+                <hr class="list-hr">
+                <p class="task-title"> ${key.title} </p>
+            `;
+            dasboardGrid.appendChild(list);
+        }
+    }
+}
+
+function showSingleTodo(e) {
+    let title = document.getElementsByClassName('task-title');
+    if(e.target.className === 'list' || e.target.tagName === 'P' || e.target.tagName === 'HR') {
+        if(e.contains(title)) {
+            console.log('yes');
+        } else console.log('no');
+    }
 }
 
 var loggedin = localStorage.getItem('loggedIn');
 if(loggedin) {
-    dashboard.classList.remove('sect');
+    showDashboard();
 }
