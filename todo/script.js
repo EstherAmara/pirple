@@ -42,13 +42,13 @@ dasboardGrid.addEventListener('click', showSingleTodo);
 
 //dashboard
 function showRegister() {
-    home.classList.add('sect');
-    register.classList.remove('sect');
+    home.classList.add('hidden');
+    register.classList.remove('hidden');
 }
 
 function showLogin() {
-    home.classList.add('sect');
-    login.classList.remove('sect');
+    home.classList.add('hidden');
+    login.classList.remove('hidden');
 }
 
 function registrationCheck(e) {
@@ -77,12 +77,12 @@ function registrationCheck(e) {
     localStorage.setItem("user", JSON.stringify(user));
     
     errorForRegister.innerText = '';
-    register.classList.add('sect');
+    register.classList.add('hidden');
 
     localStorage.setItem('loggedIn', true);
 
     firstname.innerText = user['firstName'];
-    dashboard.classList.remove('sect');
+    dashboard.classList.remove('hidden');
 }
 
 function loginCheck(e) {
@@ -108,8 +108,8 @@ function loginCheck(e) {
         localStorage.setItem('loggedIn', true);
 
         errorForLogin.innerText = '';
-        login.classList.add('sect');
-        dashboard.classList.remove('sect');
+        login.classList.add('hidden');
+        dashboard.classList.remove('hidden');
     }
 }
 
@@ -118,8 +118,8 @@ function logout() {
 }
 
 function showCreateTodo() {
-    dashboard.classList.add('sect');
-    createTodo.classList.remove('sect');
+    dashboard.classList.add('hidden');
+    createTodo.classList.remove('hidden');
 }
 
 function addTask(e) {
@@ -164,7 +164,7 @@ function addTask(e) {
 }
 
 function showDashboard() {
-    dashboard.classList.remove('sect');
+    dashboard.classList.remove('hidden');
     let tasks = JSON.parse(localStorage.getItem('task'));
 
     console.log('dashboard tasks ', tasks);
@@ -195,6 +195,7 @@ function showSingleTodo(e) {
     let tasks = JSON.parse(localStorage.getItem('task'));
     for(let key of tasks) {
         if(key.title === title) {
+            dashboard.classList.add('hidden');
             singleTitle.innerText = key.title;
             for(let taskey of key.tasks) {
                 let li = document.createElement('li');

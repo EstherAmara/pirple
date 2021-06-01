@@ -22,7 +22,7 @@
         </nav>
         <hr />
         <div id="app">
-            <div class="purple sect center" id="home">
+            <div class="purple hidden center" id="home">
                 <div>
                     <h1 id="heading">MyTodoList</h1>
                     <div class="gray">
@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <div class="login center sect" id="loginSection">
+            <div class="login center hidden" id="loginSection">
                 <div class="form-container">
                     <p class="heading">Log in to view your todo lists</p>
                     <p id="errLogin" class="err"></p>
@@ -48,7 +48,7 @@
                 </div>
             </div>
         
-            <div class="register center sect" id="register">
+            <div class="register center hidden" id="register">
                 <div class="form-container">
                     <p class="heading"> Register to start making todo lists </p>
                     <p id="errRegister" class="err"></p>
@@ -65,7 +65,7 @@
                 </div>
             </div>
         
-            <div class="m-2 sect" id="dashboard">
+            <div class="m-2 hidden" id="dashboard">
                 <div class="justify-between">
                     <p class="list-gray">Welcome back, <span id="name"> Esther </span></p>
                     <div>
@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <div class="m-2" id="create">
+            <div class="m-2 hidden" id="create">
                 <div style="margin-bottom:20px;">
                     <input type="checkbox" id="done"> <label for="done"> Mark this task as complete </label>
                 </div>
@@ -125,12 +125,17 @@
                 </form> -->
             </div>
 
-            <div class="m-2" id="single">
-                <div id="singleTitle"></div>
-                <ul id="titleList"></ul>
+            <div class="m-2 hidden" style="display: flex; flex-direction: row-reverse; justify-content: space-between;">
+                <div>
+                    <button> Edit this list </button>
+                </div>
+                <div id="single">
+                    <div id="singleTitle"></div>
+                    <ul id="titleList"></ul>
+                </div>
             </div>
         
-            <div class="login center sect" id="account">
+            <div class="login center hidden" id="account">
                 <div class="form-container">
                     <p class="heading"> Edit Account </p>
                     <form method="post" class="loginform" id="loginform">
