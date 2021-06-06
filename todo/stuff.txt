@@ -19,7 +19,7 @@ Dashboard:
 1. The dashboard should list (in chronological order), all of the "To-Do Lists" created by the user thus far. If none have been created, none should be displayed. In either case, there should be a "Create New to-do List button" somewhere on the screen.
 ---- done
 
-2. If one of the existing todo-lists is clicked on, the user should be taken to that list.
+2. If one of the existing todo-lists is clicked on, the user should be taken to that list. ---- done
 
 3. If a user clicks to create a new todo list, they should be taken to a blank list. ---- done
 
@@ -27,13 +27,13 @@ Lists:
 
 When a user is viewing a (new or existing) list, they should be able to :
 
-1. Name or rename the list to anything they want, as long as it doesn't conflict with the name of any other list created by that particular user.
+1. Name or rename the list to anything they want, as long as it doesn't conflict with the name of any other list created by that particular user. ---- done
 
-2.  Add as many items to the list as they wish
+2.  Add as many items to the list as they wish ---- done
 
-3. Check off an item as "done", and uncheck it as well
+3. Check off an item as "done", and uncheck it as well ---- done
 
-4. Save the list
+4. Save the list ---- done
 
 Users 
 

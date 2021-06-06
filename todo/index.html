@@ -76,63 +76,54 @@
                 </div>
             </div>
 
-            <div class="m-2 hidden" id="create">
-                <div style="margin-bottom:20px;">
-                    <input type="checkbox" id="done"> <label for="done"> Mark this task as complete </label>
+            <div class="m-2 hidden" id="singleTodo">
+                <div class="justify-between">
+                    <div>
+                        <div id="completed" class="hidden com"> &check; Completed</div>
+                    </div>
+                    <div>
+                        <button id="editBtn" class="list-btn"> Edit this list </button>
+                    </div>
                 </div>
-                <div class="mt-2" style="display: flex; justify-content: space-between;">
+                    <div id="single">
+                        <div id="singleTitle"></div>
+                        <ul id="titleList"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-2 mt-7 hidden" id="create">
+                <!-- <div style="margin-bottom:20px;">
+                    <input type="checkbox" id="done"> <label for="done"> Mark this task as complete </label>
+                </div> -->
+                <div class="mt-2" style="display: flex; justify-content: center; align-items: center; width: 100%;">
                     <div style="width: 50%;">
                         <form class="newlist" id="tasklist"> 
-                            <input type="text" id="title" placeholder="Todo title">
-                            <input type="text" id="subtask" placeholder="Sub task" class="subtask">
-                            <input type="text" placeholder="Sub task" class="subtask">
-                            <div>
+                            <div id="inputField">
+                                <input type="text" id="title" placeholder="Title of todo">
+                                <input type="text" id="subtask" placeholder="Sub task" class="subtask">
+                            </div>
+                            <div class="justify-between">
+                                <button type="button" class="subbtn" id="addaTask">Add subtask</button>
                                 <button class="subbtn" id="subbtn">Submit</button>
                             </div>
                         </form>
                     </div>
-                    <div style="width: 50%;">
-                        <input id="check" type="checkbox"> <label for="check" id="checklabel"> Clean the house </label>
-                    </div>
                 </div>
-
-                <!-- <form class="">
-                    <div class="justify-between newlist w-full">
-                        <div class="w-half">
-                            <input type="text" placeholder="Todo title">
-                        </div>
-                        <div>
-                            <input type="checkbox" name="done" id="done"> <span>Done</span>
-                        </div>
-                    </div>
-
-                    <div class="mt-2">
-                        <div>
-                            <div>
-                                <input type="checkbox" name="1" id="2"> Clean the house
-                            </div>
-                            <div class="mt-2">
-                                <div class="justify-between">
-                                    <input type="text" placeholder="Sub task" class="subtask" id="subtask">
-                                    <button class="subbtn" id="subbtn">Submit</button>
-                                </div>
-                                <div class="mt-2">
-                                    <p> &plus; Add a task</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form> -->
             </div>
 
-            <div class="m-2 hidden" style="display: flex; flex-direction: row-reverse; justify-content: space-between;">
-                <div>
-                    <button> Edit this list </button>
+            <div class="m-2 hidden" id="editList">
+                <div style="margin-bottom:20px;">
+                    <input type="checkbox" id="done"> <label for="done"> Mark this task as complete </label>
                 </div>
-                <div id="single">
-                    <div id="singleTitle"></div>
-                    <ul id="titleList"></ul>
-                </div>
+                <form id="editTasksForm">
+                    <div id="editsingle" class="newlist">
+                    </div>
+                    <div class="justify-between">
+                        <button type="button" class="subbtn" id="editAddTask"> Add subtask </button>
+                        <button class="list-btn" id="submitEdit">Submit</button>
+                    </div>
+                </form>
             </div>
         
             <div class="login center hidden" id="account">

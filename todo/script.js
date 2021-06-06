@@ -27,6 +27,20 @@ const tasklist = document.getElementById('tasklist');
 
 const dasboardGrid = document.getElementById('dashboard-task');
 
+const singleTodo = document.getElementById('singleTodo');
+
+const addaTask = document.getElementById('addaTask');
+
+const editList = document.getElementById('editList');
+
+const editBtn = document.getElementById('editBtn');
+
+const editTasksForm = document.getElementById('editTasksForm');
+
+const checked = document.getElementById('done');
+
+const editAddTask = document.getElementById('editAddTask');
+
 createTodoButton.addEventListener('click', showCreateTodo);
 
 //registration and login
@@ -39,6 +53,16 @@ regForm.addEventListener('submit', registrationCheck);
 tasklist.addEventListener('submit', addTask);
 
 dasboardGrid.addEventListener('click', showSingleTodo);
+
+addaTask.addEventListener('click', addTaskField);
+
+editAddTask.addEventListener('click', addEditTask);
+
+editBtn.addEventListener('click', editTodo);
+
+editTasksForm.addEventListener('submit', editTask);
+
+checked.addEventListener('click', toggleAsDone);
 
 //dashboard
 function showRegister() {
@@ -138,7 +162,8 @@ function addTask(e) {
     const task = {
         user: userEmail,
         title: title.value,
-        tasks: subtask
+        tasks: subtask,
+        done: false,
     };
 
     allTasks.push(task);
@@ -172,10 +197,18 @@ function showDashboard() {
         for(key of tasks) {
             let list = document.createElement('div');
             list.classList.add('list');
-            list.innerHTML = `
-                <hr class="list-hr">
-                <p class="task-title"> ${key.title} </p>
-            `;
+            list.classList.add('pointer');
+            if(key.done === true) {
+                list.innerHTML = `
+                    <hr class="list-hr-done">
+                    <p class="task-title"> ${key.title} </p>
+                `;
+            } else {
+                list.innerHTML = `
+                    <hr class="list-hr">
+                    <p class="task-title"> ${key.title} </p>
+                `;
+            }
             dasboardGrid.appendChild(list);
         }
     }
@@ -185,27 +218,158 @@ function showSingleTodo(e) {
     let title;
     let singleTitle = document.getElementById('singleTitle');
     let titleList = document.getElementById('titleList');
+    let completed = document.getElementById('completed');
+    
+    dashboard.classList.add('hidden');
+    singleTodo.classList.remove('hidden');
 
-    if(e.target.className === 'list' || e.target.tagName === 'P' || e.target.tagName === 'HR') {
+    if(e.target.className === 'list pointer' || e.target.tagName === 'P' || e.target.tagName === 'HR') {
         if(e.target.tagName === 'HR') {
             title = e.target.parentNode.textContent.trim();
         } else title = e.target.textContent.trim();
     }
 
     let tasks = JSON.parse(localStorage.getItem('task'));
+
     for(let key of tasks) {
         if(key.title === title) {
-            dashboard.classList.add('hidden');
             singleTitle.innerText = key.title;
+            if(key.done === true) {
+                completed.classList.remove('hidden');
+            }
             for(let taskey of key.tasks) {
                 let li = document.createElement('li');
                 li.innerText = taskey;
                 titleList.appendChild(li);
-                index++;
             }
             return;
         }
     }
+}
+
+function addTaskField() {
+    const inputField = document.getElementById('inputField');
+    const input = document.createElement('input');
+    input.classList.add('subtask');
+    input.setAttribute('type', 'text');
+    input.setAttribute('id', 'subtask');
+    input.setAttribute('placeholder', 'Sub task');
+    inputField.appendChild(input);
+}
+
+function addEditTask() {
+    const inputField = document.getElementById('editsingle');
+    const input = document.createElement('input');
+    input.classList.add('editSubtask');
+    input.setAttribute('type', 'text');
+    inputField.appendChild(input);
+}
+
+
+function editTodo() {
+    singleTodo.classList.add('hidden');
+    editList.classList.remove('hidden');
+    let singleTitle = document.getElementById('singleTitle').textContent;
+    let editTasks = document.getElementById('editsingle');
+
+    let titleInput = document.createElement('input');
+    titleInput.setAttribute('type', 'text');
+    titleInput.setAttribute('id', 'inputtitle');
+    titleInput.value = singleTitle;
+
+    let secretInput = document.createElement('input');
+    secretInput.setAttribute('type', 'text');
+    secretInput.setAttribute('id', 'secret');
+    secretInput.setAttribute('hidden', true);
+    secretInput.value = singleTitle;
+
+    editTasks.appendChild(secretInput);
+    editTasks.appendChild(titleInput);
+
+    let tasks = JSON.parse(localStorage.getItem('task'));
+    for(let key of tasks) {
+        if(key.title === singleTitle) {
+            if(key.done === true){
+                checked.checked = true;
+            } else checked.checked = false;
+            for(let taskey of key.tasks) {
+                let subtask = document.createElement('input');
+                subtask.setAttribute('type', 'text');
+                subtask.classList.add('editSubtask');
+                subtask.value = taskey;
+                editTasks.appendChild(subtask);
+            }
+            return;
+        }
+    }
+
+}
+
+function editTask(e) {
+    e.preventDefault();
+    let title = document.getElementById('inputtitle').value;
+    let secretTitle = document.getElementById('secret').value;
+    let tasks = JSON.parse(localStorage.getItem('task'));
+    const subtaskList = document.getElementsByClassName('editSubtask'); 
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userEmail = user['mail'];
+    const subtask = [];
+    const allTasks = [];
+
+    for(let key of subtaskList) {
+        subtask.push(key.value);
+    }
+
+    const task = {
+        user: userEmail,
+        title: title,
+        tasks: subtask,
+        done: false,
+    };
+
+    allTasks.push(task);
+
+    if(tasks) {
+        for(const key of tasks) {
+            if(key.title == secretTitle) continue; 
+            else if (key.title === title) return alert('This task already exists');
+            allTasks.push(key)
+        }
+    };
+    console.log(allTasks);
+    localStorage.removeItem('task');
+    localStorage.setItem('task', JSON.stringify(allTasks));
+    editTasksForm.reset();
+    alert('successful');
+    location.reload();
+        
+}
+
+function toggleAsDone() {
+    let secretTitle = document.getElementById('secret').value;
+    let tasks = JSON.parse(localStorage.getItem('task'));
+    const allTasks = [];
+    let isDone = checked.checked;
+    console.log('is done', isDone);
+
+    for(const key of tasks) {
+        if(key.title === secretTitle) {
+            let doneTask = {
+                user: key.user,
+                title: key.title,
+                tasks: key.tasks,
+                done: isDone,
+            }
+            allTasks.push(doneTask);
+            continue;
+        }
+        allTasks.push(key);
+    }
+    alert('successful');
+    localStorage.removeItem('task');
+    localStorage.setItem('task', JSON.stringify(allTasks));
+    location.reload();
 }
 
 var loggedin = localStorage.getItem('loggedIn');

@@ -49,6 +49,10 @@ hr {
 .mt-2 {
     margin-top: 2rem;
 }
+.mt-7 {
+    margin-top: 7rem;
+}
+
 .w-half {
     width: 50%;
 }
@@ -148,6 +152,12 @@ nav {
     border-radius: 30px;
     margin-bottom: 30px;
 }
+.list-hr-done {
+    width: 35%;
+    border: 2px solid green;
+    border-radius: 30px;
+    margin-bottom: 30px;
+}
 .list-btn {
     padding: 8px 25px;
     background-color: #9802d9;
@@ -171,8 +181,9 @@ nav {
     border-bottom: 2px solid #c907ff;
     color: purple;
     font-size: 18px;
-    width: 60%;
-    margin-bottom: 30px;
+    width: 100%;
+    margin-bottom: 3rem;
+    padding-bottom: 10px;
 }
 .newlist input[type='text']:focus {
     outline: none;
@@ -208,4 +219,16 @@ nav {
 
 .hidden {
     display: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+button, a {
+    cursor: pointer;
+}
+.com {
+    color: green;
+    font-weight: bold;
 }
