@@ -17,12 +17,16 @@
 </head>
 <body>
     <main>
-        <nav id="index">
-            <p> MyTodoList </p>
+        <nav id="index" class="header">
+            <p class="pointer" onclick="location.reload()"> MyTodoList </p>
+            <div>
+                <span class="pointer" id="myAccount"> My Account </span>
+                <span class="pointer" id="logout"> Log Out </span>
+            </div>
         </nav>
         <hr />
         <div id="app">
-            <div class="purple hidden center" id="home">
+            <div class="purple section center" id="home">
                 <div>
                     <h1 id="heading">MyTodoList</h1>
                     <div class="gray">
@@ -36,7 +40,7 @@
                 </div>
             </div>
 
-            <div class="login center hidden" id="loginSection">
+            <div class="login center section" id="loginSection">
                 <div class="form-container">
                     <p class="heading">Log in to view your todo lists</p>
                     <p id="errLogin" class="err"></p>
@@ -45,10 +49,11 @@
                         <input type="password" name="" id="password" placeholder="Your password" class="logininput" required>
                         <button type="submit" class="btn" id="loginSubmit">Log in</button>
                     </form>
+                    <div class="mt-2"> Don't have an account? <span id="reglog" class="pointer text-purple"> Register </span></div>
                 </div>
             </div>
         
-            <div class="register center hidden" id="register">
+            <div class="register center section" id="register">
                 <div class="form-container">
                     <p class="heading"> Register to start making todo lists </p>
                     <p id="errRegister" class="err"></p>
@@ -62,12 +67,13 @@
                         </div>
                         <button type="submit" class="btn mt-2" id="submit">Sign up</button>
                     </form>
+                    <div class="mt-2"> Have an account? <span id="logreg" class="pointer text-purple"> Log In </span></div>
                 </div>
             </div>
         
-            <div class="m-2 hidden" id="dashboard">
+            <div class="m-2 section" id="dashboard">
                 <div class="justify-between">
-                    <p class="list-gray">Welcome back, <span id="name"> Esther </span></p>
+                    <p class="list-gray">Welcome back, <span id="name"> </span></p>
                     <div>
                         <a href="#" class="list-btn" id="createTodo"> Create a new list </a>
                     </div>
@@ -76,7 +82,7 @@
                 </div>
             </div>
 
-            <div class="m-2 hidden" id="singleTodo">
+            <div class="m-2 section" id="singleTodo">
                 <div class="justify-between">
                     <div>
                         <div id="completed" class="hidden com"> &check; Completed</div>
@@ -85,14 +91,13 @@
                         <button id="editBtn" class="list-btn"> Edit this list </button>
                     </div>
                 </div>
-                    <div id="single">
-                        <div id="singleTitle"></div>
-                        <ul id="titleList"></ul>
-                    </div>
+                <div id="single">
+                    <div id="singleTitle"></div>
+                    <ul id="titleList"></ul>
                 </div>
             </div>
 
-            <div class="m-2 mt-7 hidden" id="create">
+            <div class="m-2 mt-7 section" id="create">
                 <!-- <div style="margin-bottom:20px;">
                     <input type="checkbox" id="done"> <label for="done"> Mark this task as complete </label>
                 </div> -->
@@ -112,7 +117,7 @@
                 </div>
             </div>
 
-            <div class="m-2 hidden" id="editList">
+            <div class="m-2 section" id="editList">
                 <div style="margin-bottom:20px;">
                     <input type="checkbox" id="done"> <label for="done"> Mark this task as complete </label>
                 </div>
@@ -126,25 +131,25 @@
                 </form>
             </div>
         
-            <div class="login center hidden" id="account">
-                <div class="form-container">
-                    <p class="heading"> Edit Account </p>
-                    <form method="post" class="loginform" id="loginform">
-                        <label> Your First Name </label>
-                        <input type="text" class="logininput" placeholder="Your first name" autocomplete="off" required>
+            <div class="acct section" id="account">
+                <p class="heading text-center"> Edit Account </p>
+                <form method="post" id="updateAccount">
+                    <label> Your First Name </label>
+                    <input type="text" class="acctInput" placeholder="Your first name" autocomplete="off" required id="acctFirst">
 
-                        <label> Your Last Name </label>
-                        <input type="text" class="logininput" placeholder="Your last name" required>
+                    <label> Your Last Name </label>
+                    <input type="text" class="acctInput" placeholder="Your last name" required id="acctLast">
 
-                        <label> Your email </label>
-                        <input type="email" class="logininput" placeholder="Your email" autocomplete="off" required>
+                    <label> Your email </label>
+                    <input type="email" class="acctInput" placeholder="Your email" autocomplete="off" required id="acctEmail">
 
-                        <label> Your password </label>
-                        <input type="password" class="logininput" placeholder="Your password" required>
+                    <input type="hidden" name="userid" id="userid">
 
-                        <button type="submit" class="btn mt-2" id="submit"> Update account </button>
-                    </form>
-                </div>
+                    <label> Your password </label>
+                    <input type="password" class="acctInput" placeholder="Your password" required id="acctPass">
+
+                    <button type="submit" class="acctbtn mt-2" id="submit"> Update account </button>
+                </form>
             </div>
         </div>
     </main>

@@ -4,6 +4,34 @@
     box-sizing: border-box;
 }
 
+.acct {
+    margin: auto;
+    margin-top: 50px;
+    width: 50%;
+    flex-direction: column;
+}
+
+.acctInput {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 7px 5px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+.acctbtn {
+    text-align: center;
+    align-self: center;
+    padding: 8px 13px;
+    font-size: 12.5px;
+    font-weight: bold;
+    color: white;
+    background: #9802D9;
+    border: 1px solid #430c5b;
+    border-radius: 1rem;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
 }
@@ -17,6 +45,13 @@ body {
 .gray {
     color: #e6e6e6;;
     line-height: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: auto 20px;
 }
 
 #heading {
@@ -215,6 +250,13 @@ nav {
     background: #9802D9;
     color: white;
     font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+.text-purple {
+    color: rebeccapurple;
 }
 
 .hidden {

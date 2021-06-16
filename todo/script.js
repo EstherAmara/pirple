@@ -41,6 +41,15 @@ const checked = document.getElementById('done');
 
 const editAddTask = document.getElementById('editAddTask');
 
+const logOut = document.getElementById('logout');
+const myAccount = document.getElementById('myAccount');
+const account = document.getElementById('account');
+
+const reglog = document.getElementById('reglog');
+const logreg = document.getElementById('logreg');
+
+const updateAccount = document.getElementById('updateAccount');
+
 createTodoButton.addEventListener('click', showCreateTodo);
 
 //registration and login
@@ -64,14 +73,23 @@ editTasksForm.addEventListener('submit', editTask);
 
 checked.addEventListener('click', toggleAsDone);
 
+logOut.addEventListener('click', logUserOut);
+myAccount.addEventListener('click', showUserAccount);
+
+reglog.addEventListener('click', showRegister);
+logreg.addEventListener('click', showLogin);
+
+updateAccount.addEventListener('submit', updateUserAccount);
+
 //dashboard
 function showRegister() {
-    home.classList.add('hidden');
+    hideAll();
+    // localStorage.removeItem('user');
     register.classList.remove('hidden');
 }
 
 function showLogin() {
-    home.classList.add('hidden');
+    hideAll()
     login.classList.remove('hidden');
 }
 
@@ -83,13 +101,17 @@ function registrationCheck(e) {
     const mail = document.getElementById('mail').value;
     const pass = document.getElementById('pass').value;
     const checkbox = document.getElementById('checkbox').checked;
+    const users = JSON.parse(localStorage.getItem('user'));
+    const allUsers = [];
     
     const user = {
+        'id': Math.random(),
         'firstName': firstName,
         'lastName': lastName,
         'mail': mail,
         'pass': pass,
-        'checkbox': checkbox
+        'checkbox': checkbox,
+        'loggedIn': true,
     };
 
     for(key in user) {
@@ -98,15 +120,26 @@ function registrationCheck(e) {
             return;
         }
     }
-    localStorage.setItem("user", JSON.stringify(user));
+
+    if(users) {
+        for(let key of users) {
+            if(key.mail === user.mail) {
+                alert('We already have a user with this mail. Please log in');
+                return;
+            }
+            if(key.id === user.id) {
+                user.id = Math.random() + Math.floor(Math.random(), Math.random());
+            }
+            allUsers.push(key);
+        }
+    }
+    
+    allUsers.push(user);
+
+    localStorage.setItem("user", JSON.stringify(allUsers));
     
     errorForRegister.innerText = '';
-    register.classList.add('hidden');
-
-    localStorage.setItem('loggedIn', true);
-
-    firstname.innerText = user['firstName'];
-    dashboard.classList.remove('hidden');
+    location.reload();
 }
 
 function loginCheck(e) {
@@ -118,115 +151,83 @@ function loginCheck(e) {
     if(mail === '' || pass === '') {
 
         errorForLogin.innerText = 'Input must not be empty';
-        console.log('input must not be empty');
         return;
 
     } else {
-        const user = JSON.parse(localStorage.getItem('user'));
+        const users = JSON.parse(localStorage.getItem('user'));
+        const allUsers = [];
+        let log = false;
 
-        if(mail !== user.mail || pass !== user.pass) {
-            errorForLogin.innerText = 'These credentials do not match our records';
+        for(let key of users ){
+            if(mail === key.mail && pass === key.pass) {
+                log = true;
+
+                key.loggedIn = true;
+                allUsers.push(key);
+                continue;
+            }
+            allUsers.push(key);
+        }
+        
+        if(log) {
+            localStorage.setItem('user', JSON.stringify(allUsers));
+            errorForLogin.innerText = '';
+            logOut.textContent = 'Log Out';
+            location.reload();
             return;
         }
 
-        localStorage.setItem('loggedIn', true);
-
-        errorForLogin.innerText = '';
-        login.classList.add('hidden');
-        dashboard.classList.remove('hidden');
+        errorForLogin.innerText = 'These credentials do not match our records';
+        return;
     }
-}
-
-function logout() {
-    localStorage.setItem('loggedIn', false);
-}
-
-function showCreateTodo() {
-    dashboard.classList.add('hidden');
-    createTodo.classList.remove('hidden');
-}
-
-function addTask(e) {
-    e.preventDefault();
-    const title = document.getElementById('title');
-    const subtaskList = document.getElementsByClassName('subtask'); 
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userEmail = user['mail'];
-    const subtask = [];
-    const allTasks = [];
-
-    for(let key of subtaskList) {
-        subtask.push(key.value);
-    }
-
-    const task = {
-        user: userEmail,
-        title: title.value,
-        tasks: subtask,
-        done: false,
-    };
-
-    allTasks.push(task);
-
-    let tasks = JSON.parse(localStorage.getItem('task'));
-
-    if(tasks) {
-        for(let key of tasks) {
-            console.log('key is ', key);
-            if(key.title === task.title) {
-                alert('this task already exists');
-                return;
-            }
-            allTasks.push(key)
-        }
-    };
-    console.log(allTasks);
-    // localStorage.removeItem('task');
-    localStorage.setItem('task', JSON.stringify(allTasks));
-    tasklist.reset();
-    alert('successful');
-    location.reload();
 }
 
 function showDashboard() {
+    hideAll();
     dashboard.classList.remove('hidden');
-    let tasks = JSON.parse(localStorage.getItem('task'));
 
-    console.log('dashboard tasks ', tasks);
+    let tasks = JSON.parse(localStorage.getItem('task'));
+    let name = document.getElementById('name');
+    name.textContent = userLoggedIn.firstName;
+
     if(tasks) {
         for(key of tasks) {
-            let list = document.createElement('div');
-            list.classList.add('list');
-            list.classList.add('pointer');
-            if(key.done === true) {
-                list.innerHTML = `
-                    <hr class="list-hr-done">
-                    <p class="task-title"> ${key.title} </p>
-                `;
-            } else {
-                list.innerHTML = `
-                    <hr class="list-hr">
-                    <p class="task-title"> ${key.title} </p>
-                `;
+            if(key.userid === userLoggedIn.id) {
+                let list = document.createElement('div');
+                list.classList.add('list');
+                list.classList.add('pointer');
+                if(key.done === true) {
+                    list.innerHTML = `
+                        <hr class="list-hr-done">
+                        <p class="task-title"> ${key.title} </p>
+                    `;
+                } else {
+                    list.innerHTML = `
+                        <hr class="list-hr">
+                        <p class="task-title"> ${key.title} </p>
+                    `;
+                }
+                dasboardGrid.appendChild(list);
             }
-            dasboardGrid.appendChild(list);
         }
     }
 }
 
 function showSingleTodo(e) {
+    hideAll();
+    singleTodo.classList.remove('hidden');
+
     let title;
     let singleTitle = document.getElementById('singleTitle');
     let titleList = document.getElementById('titleList');
     let completed = document.getElementById('completed');
-    
-    dashboard.classList.add('hidden');
-    singleTodo.classList.remove('hidden');
 
     if(e.target.className === 'list pointer' || e.target.tagName === 'P' || e.target.tagName === 'HR') {
         if(e.target.tagName === 'HR') {
             title = e.target.parentNode.textContent.trim();
         } else title = e.target.textContent.trim();
+    } else {
+        location.reload();
     }
 
     let tasks = JSON.parse(localStorage.getItem('task'));
@@ -237,14 +238,21 @@ function showSingleTodo(e) {
             if(key.done === true) {
                 completed.classList.remove('hidden');
             }
-            for(let taskey of key.tasks) {
-                let li = document.createElement('li');
-                li.innerText = taskey;
-                titleList.appendChild(li);
+            if(key.tasks) {
+                for(let taskey of key.tasks) {
+                    let li = document.createElement('li');
+                    li.innerText = taskey;
+                    titleList.appendChild(li);
+                }
             }
             return;
         }
     }
+}
+
+function showCreateTodo() {
+    hideAll();
+    createTodo.classList.remove('hidden');
 }
 
 function addTaskField() {
@@ -257,17 +265,46 @@ function addTaskField() {
     inputField.appendChild(input);
 }
 
-function addEditTask() {
-    const inputField = document.getElementById('editsingle');
-    const input = document.createElement('input');
-    input.classList.add('editSubtask');
-    input.setAttribute('type', 'text');
-    inputField.appendChild(input);
+function addTask(e) {
+    e.preventDefault();
+    const title = document.getElementById('title');
+    const subtaskList = document.getElementsByClassName('subtask'); 
+    const subtask = [];
+    const allTasks = [];
+
+    for(let key of subtaskList) {
+        subtask.push(key.value);
+    }
+
+    const task = {
+        userid: userLoggedIn.id,
+        title: title.value,
+        tasks: subtask,
+        done: false,
+    };
+
+    allTasks.push(task);
+
+    let tasks = JSON.parse(localStorage.getItem('task'));
+
+    if(tasks) {
+        for(let key of tasks) {
+            if(key.title === task.title) {
+                alert('this task already exists');
+                return;
+            }
+            allTasks.push(key)
+        }
+    };
+    // localStorage.removeItem('task');
+    localStorage.setItem('task', JSON.stringify(allTasks));
+    tasklist.reset();
+    alert('successful');
+    location.reload();
 }
 
-
 function editTodo() {
-    singleTodo.classList.add('hidden');
+    hideAll();
     editList.classList.remove('hidden');
     let singleTitle = document.getElementById('singleTitle').textContent;
     let editTasks = document.getElementById('editsingle');
@@ -305,6 +342,14 @@ function editTodo() {
 
 }
 
+function addEditTask() {
+    const inputField = document.getElementById('editsingle');
+    const input = document.createElement('input');
+    input.classList.add('editSubtask');
+    input.setAttribute('type', 'text');
+    inputField.appendChild(input);
+}
+
 function editTask(e) {
     e.preventDefault();
     let title = document.getElementById('inputtitle').value;
@@ -312,8 +357,6 @@ function editTask(e) {
     let tasks = JSON.parse(localStorage.getItem('task'));
     const subtaskList = document.getElementsByClassName('editSubtask'); 
     
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userEmail = user['mail'];
     const subtask = [];
     const allTasks = [];
 
@@ -322,7 +365,7 @@ function editTask(e) {
     }
 
     const task = {
-        user: userEmail,
+        userid: userLoggedIn.id,
         title: title,
         tasks: subtask,
         done: false,
@@ -337,7 +380,6 @@ function editTask(e) {
             allTasks.push(key)
         }
     };
-    console.log(allTasks);
     localStorage.removeItem('task');
     localStorage.setItem('task', JSON.stringify(allTasks));
     editTasksForm.reset();
@@ -351,12 +393,11 @@ function toggleAsDone() {
     let tasks = JSON.parse(localStorage.getItem('task'));
     const allTasks = [];
     let isDone = checked.checked;
-    console.log('is done', isDone);
 
     for(const key of tasks) {
         if(key.title === secretTitle) {
             let doneTask = {
-                user: key.user,
+                userid: userLoggedIn.id,
                 title: key.title,
                 tasks: key.tasks,
                 done: isDone,
@@ -372,7 +413,111 @@ function toggleAsDone() {
     location.reload();
 }
 
-var loggedin = localStorage.getItem('loggedIn');
-if(loggedin) {
+function logUserOut() {
+    let users = JSON.parse(localStorage.getItem('user'));
+    const allUsers = [];
+
+    if(userLoggedIn.loggedIn === true) {
+        userLoggedIn.loggedIn = false;
+    
+        allUsers.push(userLoggedIn);
+    
+        if(users) {
+            for(let key of users) {
+                if(key.mail === userLoggedIn.mail) {
+                    continue;
+                }
+                allUsers.push(key);
+            }
+        }
+        localStorage.setItem('user', JSON.stringify(allUsers));
+        location.reload();
+        logOut.textContent = 'Log In';
+    } else {
+        showLogin();
+    }
+}
+
+function showUserAccount() {
+    hideAll();
+    account.classList.remove('hidden');
+
+    let userFirstName = document.getElementById('acctFirst');
+    let userLastName = document.getElementById('acctLast');
+    let userEmail = document.getElementById('acctEmail');
+    let userPassword = document.getElementById('acctPass');
+    let userid = document.getElementById('userid');
+
+    userFirstName.value = userLoggedIn.firstName;
+    userLastName.value = userLoggedIn.lastName;
+    userEmail.value = userLoggedIn.mail;
+    userid.value = userLoggedIn.id;
+    userPassword.value = userLoggedIn.pass;
+}
+
+function updateUserAccount() {
+    let userFirstName = document.getElementById('acctFirst').value;
+    let userLastName = document.getElementById('acctLast').value;
+    let userEmail = document.getElementById('acctEmail').value;
+    let userPassword = document.getElementById('acctPass').value;
+    let userid = document.getElementById('mail').value;
+
+    let users = localStorage.getItem('user');
+    let allUsers = [];
+
+    let newUser = {
+        'firstName': userFirstName,
+        'lastName': userLastName,
+        'mail': userEmail,
+        'pass': userPassword,
+        'checkbox': true,
+        'loggedIn': true,
+    };
+    allUsers.push(newUser);
+
+    if(users) {
+        for(let key of users) {
+            if(key.id === newUser.userid) {
+                continue;
+            }
+            allUsers.push(key);
+        }
+    }
+
+    localStorage.setItem("user", JSON.stringify(allUsers));
+}
+
+function hideAll() {
+    const sections = document.getElementsByClassName('section');
+    for(let section of sections) {
+        section.classList.add('hidden');
+    }
+}
+
+
+// localStorage.removeItem('user');
+let userLoggedIn = false;
+// let users = JSON.parse(localStorage.getItem('user'));
+var users = JSON.parse(localStorage.getItem('user'));
+
+if(users) {
+    for(let user of users ){
+        if(user.loggedIn === true) {
+            userLoggedIn = user;
+            break;
+        }
+    }
+}
+
+
+if(userLoggedIn.loggedIn === true) {
+    hideAll();
     showDashboard();
+    logOut.textContent = 'Log Out';
+    myAccount.classList.remove('hidden');
+} else {
+    hideAll();
+    home.classList.remove('hidden');
+    logOut.textContent = 'Log In';
+    myAccount.classList.add('hidden');
 }
